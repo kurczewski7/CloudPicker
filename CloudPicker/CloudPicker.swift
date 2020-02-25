@@ -102,31 +102,31 @@ extension CloudPicker: UIDocumentPickerDelegate {
         
         NSFileCoordinator().coordinate(readingItemAt: pickedURL, error: NSErrorPointer.none) { (folderURL) in
 
-                        do {
-                            let keys: [URLResourceKey] = [.nameKey, .isDirectoryKey]
-                            let fileList = try FileManager.default.enumerator(at: pickedURL, includingPropertiesForKeys: keys)
+        do {
+            let keys: [URLResourceKey] = [.nameKey, .isDirectoryKey]
+            let fileList = try FileManager.default.enumerator(at: pickedURL, includingPropertiesForKeys: keys)
 
-                            switch typeOfSource {
-                            case .files:
-                                let document = Document(fileURL: pickedURL)
-                                documents.append(document)
-                            
-                            case .folders:
-                                for case let fileURL as URL in fileList! {
-                                    if !isUrlDirectory(fileURL) {
-                                        let document = Document(fileURL: fileURL)
-                                        documents.append(document)
-                                    }
-                                }
-                            case .none:
-                                break
-                            }
-
-                        } catch let error {
-                            print("error: ", error.localizedDescription)
+            switch typeOfSource {
+                case .files:
+                    let document = Document(fileURL: pickedURL)
+                    documents.append(document)
+                
+                case .folders:
+                    for case let fileURL as URL in fileList! {
+                        if !isUrlDirectory(fileURL) {
+                            let document = Document(fileURL: fileURL)
+                            documents.append(document)
                         }
-
                     }
+                case .none:
+                    break
+            }
+
+        } catch let error {
+            print("error: ", error.localizedDescription)
+        }
+
+      }
     }
 //   private func documentFromURL(pickedURL: URL) {
 //          let shouldStopAccessing = pickedURL.startAccessingSecurityScopedResource()

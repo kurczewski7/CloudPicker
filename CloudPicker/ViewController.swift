@@ -43,17 +43,13 @@ class ViewController: UIViewController, CloudPickerDeleate {
         }
         // Configure Refresh Control
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-    
-        refreshControl .attributedTitle = NSAttributedString(string: "Proszę czekać...", attributes: .none)
+        refreshControl.tintColor =  UIColor.orange        //UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+        refreshControl .attributedTitle = NSAttributedString(string: "Proszę czekać...odświeżanie", attributes: .none)
     }
     @objc private func refreshData(_ sender: Any) {
-        // Fetch Weather Data
         print("Refresh Data")
-        tableView.reloadData()
-        //tableView.updateView()
+        DispatchQueue.main.async {  self.tableView.reloadData()   }
         self.refreshControl.endRefreshing()
-        //self.activityIndicatorView.stopAnimating()
-
     }
 }
 extension ViewController: UITableViewDelegate,UITableViewDataSource {
