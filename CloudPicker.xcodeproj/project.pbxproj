@@ -16,6 +16,7 @@
 		2CE0F33E24051636001765C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CE0F33C24051636001765C1 /* LaunchScreen.storyboard */; };
 		2CE0F34924051636001765C1 /* CloudPickerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE0F34824051636001765C1 /* CloudPickerTests.swift */; };
 		2CE0F35424051636001765C1 /* CloudPickerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE0F35324051636001765C1 /* CloudPickerUITests.swift */; };
+		2CE0F36224051ACC001765C1 /* CloudPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE0F36124051ACC001765C1 /* CloudPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		2CE0F34F24051636001765C1 /* CloudPickerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudPickerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CE0F35324051636001765C1 /* CloudPickerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudPickerUITests.swift; sourceTree = "<group>"; };
 		2CE0F35524051636001765C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2CE0F36124051ACC001765C1 /* CloudPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 			children = (
 				2CE0F32E2405162C001765C1 /* AppDelegate.swift */,
 				2CE0F3302405162C001765C1 /* SceneDelegate.swift */,
+				2CE0F36124051ACC001765C1 /* CloudPicker.swift */,
 				2CE0F3322405162C001765C1 /* ViewController.swift */,
 				2CE0F3342405162C001765C1 /* Main.storyboard */,
 				2CE0F33A24051636001765C1 /* Assets.xcassets */,
@@ -262,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CE0F36224051ACC001765C1 /* CloudPicker.swift in Sources */,
 				2CE0F3332405162C001765C1 /* ViewController.swift in Sources */,
 				2CE0F3392405162C001765C1 /* CloudPicker.xcdatamodeld in Sources */,
 				2CE0F32F2405162C001765C1 /* AppDelegate.swift in Sources */,
