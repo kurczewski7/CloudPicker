@@ -59,9 +59,11 @@ extension ViewController: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "\(indexPath.row):"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! DocumentCell
+        
+        cell.textLabel?.text = "\(indexPath.row+1):  \(documents[indexPath.row].fileURL.lastPathComponent)"
         cell.detailTextLabel?.text = "\(documents[indexPath.row].fileURL)"
+        cell.configure(document: documents[indexPath.row])
         return cell
     }
 }

@@ -8,22 +8,27 @@
 
 import UIKit
 import MobileCoreServices
-
+protocol DocumentDelegate {
+    func didPickDocuments(documents: [CloudPicker.Document]?)
+}
 protocol CloudPickerDeleate {
     func documentsPicked(documents: [CloudPicker.Document]?)
 }
 class CloudPicker: NSObject {
+    enum TypeOfSource: Int {
+        case files
+        case folder
+    }
     var delegate: CloudPickerDeleate?
+    private var delegatePicker: DocumentDelegate?
+    
     private var pickerController: UIDocumentPickerViewController?
     private weak var presentationController: UIViewController?
+   
     private var folderUrl: URL?
     private var typeOfSource: TypeOfSource!
     private var documents = [Document]()
     
-    enum TypeOfSource: Int {
-        case folders
-        case files
-    }
     class Document: UIDocument {
         var data: Data?
         override func contents(forType typeName: String) throws -> Any {
@@ -39,6 +44,7 @@ class CloudPicker: NSObject {
     init(presentationController: UIViewController) {
         super.init()
         self.presentationController = presentationController
+        self.delegatePicker = self as? DocumentDelegate
     }
     public func folderAction(for type: TypeOfSource, title: String) -> UIAlertAction? {
         let action = UIAlertAction(title: title, style: .default) { (alertAction) in
@@ -66,7 +72,7 @@ class CloudPicker: NSObject {
         if let action = self.folderAction(for: .files, title: "Files") {
             allertController.addAction(action)
         }
-        if let action = self.folderAction(for: .folders, title: "Folder") {
+        if let action = self.folderAction(for: .folder, title: "Folder") {
             allertController.addAction(action)
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
@@ -84,6 +90,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first else {  return  }
         print("urls:\(urls), count:\(urls.count)")
+        //documents = []
         documentFromURL(pickedURL: url)
         delegate?.documentsPicked(documents: documents)
         print("documents count:\(documents.count)")
@@ -99,9 +106,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
                 pickedURL.stopAccessingSecurityScopedResource()
             }
         }
-        
         NSFileCoordinator().coordinate(readingItemAt: pickedURL, error: NSErrorPointer.none) { (folderURL) in
-
         do {
             let keys: [URLResourceKey] = [.nameKey, .isDirectoryKey]
             let fileList = try FileManager.default.enumerator(at: pickedURL, includingPropertiesForKeys: keys)
@@ -111,7 +116,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
                     let document = Document(fileURL: pickedURL)
                     documents.append(document)
                 
-                case .folders:
+                case .folder:
                     for case let fileURL as URL in fileList! {
                         if !isUrlDirectory(fileURL) {
                             let document = Document(fileURL: fileURL)
@@ -128,6 +133,7 @@ extension CloudPicker: UIDocumentPickerDelegate {
 
       }
     }
+   
 //   private func documentFromURL(pickedURL: URL) {
 //          let shouldStopAccessing = pickedURL.startAccessingSecurityScopedResource()
 //          defer {
@@ -168,3 +174,4 @@ extension CloudPicker: UIDocumentPickerDelegate {
         }
     }
 }
+extension CloudPicker: UINavigationControllerDelegate {}
